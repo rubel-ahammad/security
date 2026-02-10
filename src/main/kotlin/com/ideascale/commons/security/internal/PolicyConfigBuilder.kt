@@ -1,15 +1,15 @@
 package com.ideascale.commons.security.internal
 
 import com.ideascale.commons.security.api.Action
-import com.ideascale.commons.security.api.ActionDslScope
+import com.ideascale.commons.security.dsl.ActionDslScope
 import com.ideascale.commons.security.api.ActionSelection
 import com.ideascale.commons.security.api.Policy
 import com.ideascale.commons.security.api.PolicyBinding
 import com.ideascale.commons.security.api.PolicyConfig
-import com.ideascale.commons.security.api.PolicyDslScope
+import com.ideascale.commons.security.dsl.PolicyDslScope
 import com.ideascale.commons.security.api.PolicyId
 import com.ideascale.commons.security.api.Resource
-import com.ideascale.commons.security.api.ResourceDslScope
+import com.ideascale.commons.security.dsl.ResourceDslScope
 import com.ideascale.commons.security.api.ResourceSelection
 
 /**

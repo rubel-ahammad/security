@@ -1,5 +1,9 @@
-package com.ideascale.commons.security.api
+package com.ideascale.commons.security.dsl
 
+import com.ideascale.commons.security.api.Action
+import com.ideascale.commons.security.api.Policy
+import com.ideascale.commons.security.api.PolicyConfig
+import com.ideascale.commons.security.api.Resource
 import com.ideascale.commons.security.internal.PolicyConfigBuilder
 
 @DslMarker
