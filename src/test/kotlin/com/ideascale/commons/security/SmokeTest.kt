@@ -1,6 +1,7 @@
 package com.ideascale.commons.security
 
 import com.ideascale.commons.security.api.*
+import com.ideascale.commons.security.dsl.policies
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
