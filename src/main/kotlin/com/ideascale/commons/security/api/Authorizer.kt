@@ -34,3 +34,21 @@ fun Authorizer.check(request: AccessRequest) {
     is AccessDecision.Deny -> throw AccessDeniedException(d)
   }
 }
+
+fun Authorizer.check(
+  principal: Principal?,
+  resource: Resource,
+  action: Action,
+  resourceId: Long,
+  environment: Map<String, String> = emptyMap()
+) {
+  check(
+    AccessRequest(
+      principal = principal,
+      resource = resource,
+      action = action,
+      resourceId = resourceId,
+      environment = environment
+    )
+  )
+}
