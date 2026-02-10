@@ -20,7 +20,7 @@ class SmokeTest {
     val cfg = policies {
       resource(Idea) { action(Read) { +IsAuthenticated } }
     }
-    val authz = Authorizers.from(cfg)
+    val authz = AuthorizerBuilder(cfg).build()
 
     val decision = authz.authorize(
       AccessRequest(
