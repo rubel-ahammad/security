@@ -29,10 +29,10 @@ class AccessDeniedException(val decision: AccessDecision.Deny) :
   RuntimeException("Access denied: ${decision.reason.code}")
 
 fun Authorizer.check(request: AccessRequest) {
-  when (val d = authorize(request)) {
-    AccessDecision.Allow -> Unit
-    is AccessDecision.Deny -> throw AccessDeniedException(d)
-  }
+  val decision = authorize(request)
+  val handler = (this as? AccessDecisionHandlerProvider)?.accessDecisionHandler
+    ?: DefaultAccessDecisionHandler
+  handler.handle(decision)
 }
 
 fun Authorizer.check(
