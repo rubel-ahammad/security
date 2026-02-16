@@ -11,8 +11,8 @@ fun interface Authorizer {
   /**
    * Authorizes and throws when denied.
    *
-   * Default behavior is throw-on-deny. Builder-produced authorizers may override this behavior
-   * via a configured [AuthorizationDecisionHandler].
+   * Deny always throws. Builder-produced authorizers may customize the exception type via
+   * a configured [DenyExceptionFactory].
    */
   fun check(request: AuthorizationRequest) {
     val decision = authorize(request)

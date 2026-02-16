@@ -1,8 +1,8 @@
 package com.ideascale.commons.security
 
 import com.ideascale.commons.security.authorization.AuthorizationDecision
-import com.ideascale.commons.security.authorization.AuthorizationDecisionHandler
 import com.ideascale.commons.security.authorization.AccessDeniedException
+import com.ideascale.commons.security.authorization.DenyExceptionFactory
 import com.ideascale.commons.security.authorization.AuthorizerBuilder
 import com.ideascale.commons.security.model.AuthorizationRequest
 import com.ideascale.commons.security.model.Action
@@ -18,8 +18,6 @@ import com.ideascale.commons.security.policy.PolicyEffect
 import com.ideascale.commons.security.policy.dsl.policies
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -46,6 +44,9 @@ private object Throws : Policy {
   override val id: PolicyId = PolicyId("policy.throws")
   override fun evaluate(ctx: PolicyContext): PolicyEffect = error("boom")
 }
+
+private class CustomAccessDeniedException(val deny: AuthorizationDecision.Deny) :
+  RuntimeException("custom denied: ${deny.reason.code}")
 
 class SmokeTest {
   @Test
@@ -145,7 +146,7 @@ class SmokeTest {
     }
     val authz = AuthorizerBuilder(cfg).build()
 
-    val ex = assertThrows(AccessDeniedException::class.java) {
+    val ex = try {
       authz.check(
         AuthorizationRequest(
           principal = null,
@@ -154,31 +155,36 @@ class SmokeTest {
           resourceId = 123L
         )
       )
+      throw AssertionError("Expected AccessDeniedException")
+    } catch (e: AccessDeniedException) {
+      e
     }
+
     assertEquals("default-deny", ex.decision.reason.code)
   }
 
   @Test
-  fun `custom decision handler is used by check`() {
-    val captured = mutableListOf<AuthorizationDecision>()
+  fun `custom decision handler customizes exception type`() {
     val cfg = policies {
       resource(Idea) { action(Read) { +IsAuthenticated } }
     }
     val authz = AuthorizerBuilder(cfg)
-      .decisionHandler(AuthorizationDecisionHandler { decision -> captured += decision })
+      .denyExceptionFactory(DenyExceptionFactory { deny -> CustomAccessDeniedException(deny) })
       .build()
 
-    authz.check(
-      principal = null,
-      resource = Idea,
-      action = Read,
-      resourceId = 123L
-    )
+    val ex = try {
+      authz.check(
+        principal = null,
+        resource = Idea,
+        action = Read,
+        resourceId = 123L
+      )
+      throw AssertionError("Expected CustomAccessDeniedException")
+    } catch (e: CustomAccessDeniedException) {
+      e
+    }
 
-    assertEquals(1, captured.size)
-    val deny = asDeny(captured.first())
-    assertNotNull(deny.reason)
-    assertEquals("default-deny", deny.reason.code)
+    assertEquals("default-deny", ex.deny.reason.code)
   }
 
   private fun asDeny(decision: AuthorizationDecision): AuthorizationDecision.Deny {
