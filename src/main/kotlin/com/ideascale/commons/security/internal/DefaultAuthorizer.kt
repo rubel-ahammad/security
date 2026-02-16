@@ -1,7 +1,6 @@
 package com.ideascale.commons.security.internal
 
 import com.ideascale.commons.security.model.AuthorizationRequest
-import com.ideascale.commons.security.model.DenyReason
 import com.ideascale.commons.security.authorization.AuthorizationDecision
 import com.ideascale.commons.security.authorization.Authorizer
 import com.ideascale.commons.security.policy.PolicyConfig
@@ -53,12 +52,6 @@ internal class DefaultAuthorizer(
 
   private fun denyException(phase: String, e: Exception): AuthorizationDecision.Deny =
     AuthorizationDecision.Deny(
-      DenyReason(
-        code = "exception",
-        details = mapOf(
-          "phase" to phase,
-          "exceptionType" to (e::class.simpleName ?: "Exception")
-        )
-      )
+      DenyReasons.exception(phase = phase, exception = e)
     )
 }

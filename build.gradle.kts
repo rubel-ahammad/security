@@ -23,6 +23,10 @@ repositories {
   mavenLocal()
 }
 
+dependencies {
+  testImplementation("junit:junit:4.13.2")
+}
+
 tasks.withType<KotlinCompile>().configureEach {
   kotlinOptions {
     jvmTarget = "17"

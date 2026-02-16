@@ -17,8 +17,6 @@ import com.ideascale.commons.security.policy.PolicyEffect
  * - Exceptions in policy evaluation fail closed (deny)
  */
 internal class PolicyEngine {
-  private val DEFAULT_DENY = DenyReason(code = "default-deny")
-
   fun evaluate(policies: List<Policy>, ctx: PolicyContext): AuthorizationDecision {
     var sawAllow = false
 
@@ -28,13 +26,10 @@ internal class PolicyEngine {
       } catch (e: Exception) {
         // Fail closed: exception becomes Deny and short-circuits immediately
         PolicyEffect.Deny(
-          DenyReason(
-            code = "exception",
-            details = mapOf(
-              "phase" to "policy-evaluate",
-              "policyId" to p.id.value,
-              "exceptionType" to (e::class.simpleName ?: "Exception")
-            )
+          DenyReasons.exception(
+            phase = "policy-evaluate",
+            exception = e,
+            details = mapOf("policyId" to p.id.value)
           )
         )
       }
@@ -50,6 +45,6 @@ internal class PolicyEngine {
     }
 
     return if (sawAllow) AuthorizationDecision.Allow
-    else AuthorizationDecision.Deny(DEFAULT_DENY)
+    else AuthorizationDecision.Deny(DenyReasons.defaultDeny)
   }
 }

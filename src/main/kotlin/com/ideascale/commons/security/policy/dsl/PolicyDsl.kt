@@ -35,9 +35,6 @@ interface ActionDslScope {
  *
  * Implementation details live in internal builder classes.
  */
-fun policies(
-  version: String = "1",
-  block: PolicyDslScope.() -> Unit
-): PolicyConfig = PolicyConfigBuilder(version)
+fun policies(block: PolicyDslScope.() -> Unit): PolicyConfig = PolicyConfigBuilder()
   .apply(block)
   .build()

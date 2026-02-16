@@ -4,10 +4,9 @@ import com.ideascale.commons.security.model.AuthorizationRequest
 import com.ideascale.commons.security.model.ActionId
 import com.ideascale.commons.security.model.PolicyId
 import com.ideascale.commons.security.model.ResourceId
-import com.ideascale.commons.security.policy.ActionSelection
 import com.ideascale.commons.security.policy.Policy
 import com.ideascale.commons.security.policy.PolicyConfig
-import com.ideascale.commons.security.policy.ResourceSelection
+import com.ideascale.commons.security.policy.Selection
 
 /**
  * Resolves policies by:
@@ -41,17 +40,10 @@ internal class DefaultPolicyResolver(
     return out
   }
 
-  private fun ResourceSelection.matches(resourceType: ResourceId): Boolean =
+  private fun <T> Selection<T>.matches(value: T): Boolean =
     when (this) {
-      ResourceSelection.Any -> true
-      is ResourceSelection.Exact -> this.id == resourceType
-      is ResourceSelection.OneOf -> resourceType in this.ids
-    }
-
-  private fun ActionSelection.matches(actionId: ActionId): Boolean =
-    when (this) {
-      ActionSelection.Any -> true
-      is ActionSelection.Exact -> this.id == actionId
-      is ActionSelection.OneOf -> actionId in this.ids
+      Selection.Any -> true
+      is Selection.Exact -> this.value == value
+      is Selection.OneOf -> value in this.values
     }
 }
