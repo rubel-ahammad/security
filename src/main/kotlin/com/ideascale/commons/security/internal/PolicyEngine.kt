@@ -14,7 +14,7 @@ import com.ideascale.commons.security.policy.PolicyEffect
  *
  * Also:
  * - Policies are evaluated lazily in a loop
- * - Exceptions in policy evaluation fail closed (deny)
+ * - Caught Exceptions in policy evaluation fail closed (deny)
  */
 internal class PolicyEngine {
   fun evaluate(policies: List<Policy>, ctx: PolicyContext): AuthorizationDecision {

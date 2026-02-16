@@ -1,6 +1,8 @@
 package com.ideascale.commons.security
 
 import com.ideascale.commons.security.authorization.AuthorizationDecision
+import com.ideascale.commons.security.authorization.AuthorizationDecisionHandler
+import com.ideascale.commons.security.authorization.AccessDeniedException
 import com.ideascale.commons.security.authorization.AuthorizerBuilder
 import com.ideascale.commons.security.model.AuthorizationRequest
 import com.ideascale.commons.security.model.Action
@@ -16,6 +18,8 @@ import com.ideascale.commons.security.policy.PolicyEffect
 import com.ideascale.commons.security.policy.dsl.policies
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -132,6 +136,49 @@ class SmokeTest {
     assertEquals("policy-evaluate", deny.reason.details["phase"])
     assertEquals(Throws.id.value, deny.reason.details["policyId"])
     assertEquals("java.lang.IllegalStateException", deny.reason.details["exceptionType"])
+  }
+
+  @Test
+  fun `default check throws access denied`() {
+    val cfg = policies {
+      resource(Idea) { action(Read) { +IsAuthenticated } }
+    }
+    val authz = AuthorizerBuilder(cfg).build()
+
+    val ex = assertThrows(AccessDeniedException::class.java) {
+      authz.check(
+        AuthorizationRequest(
+          principal = null,
+          resource = Idea,
+          action = Read,
+          resourceId = 123L
+        )
+      )
+    }
+    assertEquals("default-deny", ex.decision.reason.code)
+  }
+
+  @Test
+  fun `custom decision handler is used by check`() {
+    val captured = mutableListOf<AuthorizationDecision>()
+    val cfg = policies {
+      resource(Idea) { action(Read) { +IsAuthenticated } }
+    }
+    val authz = AuthorizerBuilder(cfg)
+      .decisionHandler(AuthorizationDecisionHandler { decision -> captured += decision })
+      .build()
+
+    authz.check(
+      principal = null,
+      resource = Idea,
+      action = Read,
+      resourceId = 123L
+    )
+
+    assertEquals(1, captured.size)
+    val deny = asDeny(captured.first())
+    assertNotNull(deny.reason)
+    assertEquals("default-deny", deny.reason.code)
   }
 
   private fun asDeny(decision: AuthorizationDecision): AuthorizationDecision.Deny {

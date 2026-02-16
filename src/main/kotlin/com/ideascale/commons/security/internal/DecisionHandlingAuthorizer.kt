@@ -11,4 +11,9 @@ internal class DecisionHandlingAuthorizer(
 ) : Authorizer, AuthorizationDecisionHandlerProvider {
   override fun authorize(request: AuthorizationRequest): AuthorizationDecision =
     delegate.authorize(request)
+
+  override fun check(request: AuthorizationRequest) {
+    val decision = delegate.authorize(request)
+    authorizationDecisionHandler.handle(decision)
+  }
 }

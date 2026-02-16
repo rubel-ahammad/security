@@ -13,7 +13,7 @@ import com.ideascale.commons.security.policy.PolicyContextFactory
  * - resolve Policy instances
  * - evaluate with hard-coded semantics
  *
- * Any exception fails closed (deny) with phase info.
+ * Any caught Exception fails closed (deny) with phase info.
  */
 internal class DefaultAuthorizer(
   private val config: PolicyConfig,
