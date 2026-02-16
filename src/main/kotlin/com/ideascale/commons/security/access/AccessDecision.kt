@@ -1,4 +1,7 @@
-package com.ideascale.commons.security.api
+package com.ideascale.commons.security.access
+
+import com.ideascale.commons.security.core.DenyReason
+import com.ideascale.commons.security.core.PolicyId
 
 sealed interface AccessDecision {
   val decidedByPolicyId: PolicyId?

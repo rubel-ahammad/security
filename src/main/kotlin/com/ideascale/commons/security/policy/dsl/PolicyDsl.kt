@@ -1,10 +1,10 @@
-package com.ideascale.commons.security.dsl
+package com.ideascale.commons.security.policy.dsl
 
-import com.ideascale.commons.security.api.Action
-import com.ideascale.commons.security.api.Policy
-import com.ideascale.commons.security.api.PolicyConfig
-import com.ideascale.commons.security.api.Resource
+import com.ideascale.commons.security.core.Action
+import com.ideascale.commons.security.core.Resource
 import com.ideascale.commons.security.internal.PolicyConfigBuilder
+import com.ideascale.commons.security.policy.Policy
+import com.ideascale.commons.security.policy.PolicyConfig
 
 @DslMarker
 annotation class PolicyDslMarker

@@ -1,12 +1,12 @@
 package com.ideascale.commons.security.internal
 
-import com.ideascale.commons.security.api.AccessContext
-import com.ideascale.commons.security.api.AccessContextFactory
-import com.ideascale.commons.security.api.AccessDecision
-import com.ideascale.commons.security.api.AccessRequest
-import com.ideascale.commons.security.api.Authorizer
-import com.ideascale.commons.security.api.DenyReason
-import com.ideascale.commons.security.api.PolicyConfig
+import com.ideascale.commons.security.core.AccessRequest
+import com.ideascale.commons.security.core.DenyReason
+import com.ideascale.commons.security.access.AccessDecision
+import com.ideascale.commons.security.access.Authorizer
+import com.ideascale.commons.security.policy.PolicyConfig
+import com.ideascale.commons.security.policy.PolicyContext
+import com.ideascale.commons.security.policy.PolicyContextFactory
 
 /**
  * Facade over the authorization pipeline:
@@ -18,7 +18,7 @@ import com.ideascale.commons.security.api.PolicyConfig
  */
 internal class DefaultAuthorizer(
   private val config: PolicyConfig,
-  private val contextFactory: AccessContextFactory,
+  private val contextFactory: PolicyContextFactory,
   private val policyResolver: PolicyResolver,
   private val engine: PolicyEngine
 ) : Authorizer {
@@ -32,7 +32,7 @@ internal class DefaultAuthorizer(
   }
 
   override fun authorize(request: AccessRequest): AccessDecision {
-    val ctx: AccessContext = try {
+    val ctx: PolicyContext = try {
       contextFactory.create(request)
     } catch (e: Exception) {
       return denyException("context-create", e)

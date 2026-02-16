@@ -1,4 +1,8 @@
-package com.ideascale.commons.security.api
+package com.ideascale.commons.security.policy
+
+import com.ideascale.commons.security.core.ActionId
+import com.ideascale.commons.security.core.PolicyId
+import com.ideascale.commons.security.core.ResourceId
 
 data class PolicyConfig(
   val version: String,

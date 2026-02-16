@@ -1,4 +1,4 @@
-package com.ideascale.commons.security.api
+package com.ideascale.commons.security.core
 
 data class DenyReason(
   val code: String,

@@ -1,21 +1,21 @@
 package com.ideascale.commons.security.internal
 
-import com.ideascale.commons.security.api.Action
-import com.ideascale.commons.security.dsl.ActionDslScope
-import com.ideascale.commons.security.api.ActionSelection
-import com.ideascale.commons.security.api.Policy
-import com.ideascale.commons.security.api.PolicyBinding
-import com.ideascale.commons.security.api.PolicyConfig
-import com.ideascale.commons.security.dsl.PolicyDslScope
-import com.ideascale.commons.security.api.PolicyId
-import com.ideascale.commons.security.api.Resource
-import com.ideascale.commons.security.dsl.ResourceDslScope
-import com.ideascale.commons.security.api.ResourceSelection
+import com.ideascale.commons.security.core.Action
+import com.ideascale.commons.security.core.PolicyId
+import com.ideascale.commons.security.core.Resource
+import com.ideascale.commons.security.policy.ActionSelection
+import com.ideascale.commons.security.policy.Policy
+import com.ideascale.commons.security.policy.PolicyBinding
+import com.ideascale.commons.security.policy.PolicyConfig
+import com.ideascale.commons.security.policy.ResourceSelection
+import com.ideascale.commons.security.policy.dsl.ActionDslScope
+import com.ideascale.commons.security.policy.dsl.PolicyDslScope
+import com.ideascale.commons.security.policy.dsl.ResourceDslScope
 
 /**
  * Internal DSL implementation.
  *
- * Public API is the `policies {}` entrypoint and the DSL scope interfaces in api/.
+ * Public API is the `policies {}` entrypoint and the DSL scope interfaces in policy/dsl.
  */
 internal class PolicyConfigBuilder(
   private val version: String

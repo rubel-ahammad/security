@@ -1,10 +1,10 @@
 package com.ideascale.commons.security.internal
 
-import com.ideascale.commons.security.api.AccessContext
-import com.ideascale.commons.security.api.AccessDecision
-import com.ideascale.commons.security.api.DenyReason
-import com.ideascale.commons.security.api.Policy
-import com.ideascale.commons.security.api.PolicyEffect
+import com.ideascale.commons.security.access.AccessDecision
+import com.ideascale.commons.security.core.DenyReason
+import com.ideascale.commons.security.policy.Policy
+import com.ideascale.commons.security.policy.PolicyContext
+import com.ideascale.commons.security.policy.PolicyEffect
 
 /**
  * Hard-coded v1 semantics:
@@ -19,7 +19,7 @@ import com.ideascale.commons.security.api.PolicyEffect
 internal class PolicyEngine {
   private val DEFAULT_DENY = DenyReason(code = "default-deny")
 
-  fun evaluate(policies: List<Policy>, ctx: AccessContext): AccessDecision {
+  fun evaluate(policies: List<Policy>, ctx: PolicyContext): AccessDecision {
     var sawAllow = false
 
     for (p in policies) {

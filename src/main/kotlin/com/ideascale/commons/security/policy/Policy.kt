@@ -1,8 +1,11 @@
-package com.ideascale.commons.security.api
+package com.ideascale.commons.security.policy
+
+import com.ideascale.commons.security.core.DenyReason
+import com.ideascale.commons.security.core.PolicyId
 
 interface Policy {
   val id: PolicyId
-  fun evaluate(ctx: AccessContext): PolicyEffect
+  fun evaluate(ctx: PolicyContext): PolicyEffect
 }
 
 /**
@@ -13,8 +16,3 @@ sealed interface PolicyEffect {
   data object NotApplicable : PolicyEffect
   data class Deny(val reason: DenyReason? = null) : PolicyEffect
 }
-
-data class PolicyEvaluation(
-  val policyId: PolicyId,
-  val effect: PolicyEffect
-)

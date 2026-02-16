@@ -1,13 +1,13 @@
 package com.ideascale.commons.security.internal
 
-import com.ideascale.commons.security.api.AccessRequest
-import com.ideascale.commons.security.api.ActionId
-import com.ideascale.commons.security.api.ActionSelection
-import com.ideascale.commons.security.api.Policy
-import com.ideascale.commons.security.api.PolicyConfig
-import com.ideascale.commons.security.api.PolicyId
-import com.ideascale.commons.security.api.ResourceId
-import com.ideascale.commons.security.api.ResourceSelection
+import com.ideascale.commons.security.core.AccessRequest
+import com.ideascale.commons.security.core.ActionId
+import com.ideascale.commons.security.core.PolicyId
+import com.ideascale.commons.security.core.ResourceId
+import com.ideascale.commons.security.policy.ActionSelection
+import com.ideascale.commons.security.policy.Policy
+import com.ideascale.commons.security.policy.PolicyConfig
+import com.ideascale.commons.security.policy.ResourceSelection
 
 /**
  * Resolves policies by:
