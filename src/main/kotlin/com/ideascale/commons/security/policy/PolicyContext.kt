@@ -1,11 +1,11 @@
 package com.ideascale.commons.security.policy
 
-import com.ideascale.commons.security.core.AccessRequest
+import com.ideascale.commons.security.model.AuthorizationRequest
 
 data class PolicyContext(
-  val request: AccessRequest
+  val request: AuthorizationRequest
 )
 
 fun interface PolicyContextFactory {
-  fun create(request: AccessRequest): PolicyContext
+  fun create(request: AuthorizationRequest): PolicyContext
 }

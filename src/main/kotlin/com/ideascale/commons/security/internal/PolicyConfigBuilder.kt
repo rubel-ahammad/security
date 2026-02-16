@@ -1,8 +1,8 @@
 package com.ideascale.commons.security.internal
 
-import com.ideascale.commons.security.core.Action
-import com.ideascale.commons.security.core.PolicyId
-import com.ideascale.commons.security.core.Resource
+import com.ideascale.commons.security.model.Action
+import com.ideascale.commons.security.model.PolicyId
+import com.ideascale.commons.security.model.Resource
 import com.ideascale.commons.security.policy.ActionSelection
 import com.ideascale.commons.security.policy.Policy
 import com.ideascale.commons.security.policy.PolicyBinding

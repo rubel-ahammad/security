@@ -1,9 +1,9 @@
 package com.ideascale.commons.security.internal
 
-import com.ideascale.commons.security.core.AccessRequest
-import com.ideascale.commons.security.core.DenyReason
-import com.ideascale.commons.security.access.AccessDecision
-import com.ideascale.commons.security.access.Authorizer
+import com.ideascale.commons.security.model.AuthorizationRequest
+import com.ideascale.commons.security.model.DenyReason
+import com.ideascale.commons.security.authorization.AuthorizationDecision
+import com.ideascale.commons.security.authorization.Authorizer
 import com.ideascale.commons.security.policy.PolicyConfig
 import com.ideascale.commons.security.policy.PolicyContext
 import com.ideascale.commons.security.policy.PolicyContextFactory
@@ -31,7 +31,7 @@ internal class DefaultAuthorizer(
     require(missing.isEmpty()) { "Unknown policy ids in bindings: $missing" }
   }
 
-  override fun authorize(request: AccessRequest): AccessDecision {
+  override fun authorize(request: AuthorizationRequest): AuthorizationDecision {
     val ctx: PolicyContext = try {
       contextFactory.create(request)
     } catch (e: Exception) {
@@ -51,8 +51,8 @@ internal class DefaultAuthorizer(
     }
   }
 
-  private fun denyException(phase: String, e: Exception): AccessDecision.Deny =
-    AccessDecision.Deny(
+  private fun denyException(phase: String, e: Exception): AuthorizationDecision.Deny =
+    AuthorizationDecision.Deny(
       DenyReason(
         code = "exception",
         details = mapOf(

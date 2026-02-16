@@ -1,9 +1,9 @@
 package com.ideascale.commons.security.internal
 
-import com.ideascale.commons.security.core.AccessRequest
-import com.ideascale.commons.security.core.ActionId
-import com.ideascale.commons.security.core.PolicyId
-import com.ideascale.commons.security.core.ResourceId
+import com.ideascale.commons.security.model.AuthorizationRequest
+import com.ideascale.commons.security.model.ActionId
+import com.ideascale.commons.security.model.PolicyId
+import com.ideascale.commons.security.model.ResourceId
 import com.ideascale.commons.security.policy.ActionSelection
 import com.ideascale.commons.security.policy.Policy
 import com.ideascale.commons.security.policy.PolicyConfig
@@ -22,7 +22,7 @@ internal class DefaultPolicyResolver(
   private val config: PolicyConfig
 ) : PolicyResolver {
 
-  override fun resolve(request: AccessRequest): List<Policy> {
+  override fun resolve(request: AuthorizationRequest): List<Policy> {
     val resourceType: ResourceId = request.resource.id
     val actionId: ActionId = request.action.id
 

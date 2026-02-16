@@ -1,7 +1,7 @@
 package com.ideascale.commons.security.internal
 
-import com.ideascale.commons.security.access.AccessDecision
-import com.ideascale.commons.security.core.DenyReason
+import com.ideascale.commons.security.authorization.AuthorizationDecision
+import com.ideascale.commons.security.model.DenyReason
 import com.ideascale.commons.security.policy.Policy
 import com.ideascale.commons.security.policy.PolicyContext
 import com.ideascale.commons.security.policy.PolicyEffect
@@ -19,7 +19,7 @@ import com.ideascale.commons.security.policy.PolicyEffect
 internal class PolicyEngine {
   private val DEFAULT_DENY = DenyReason(code = "default-deny")
 
-  fun evaluate(policies: List<Policy>, ctx: PolicyContext): AccessDecision {
+  fun evaluate(policies: List<Policy>, ctx: PolicyContext): AuthorizationDecision {
     var sawAllow = false
 
     for (p in policies) {
@@ -42,14 +42,14 @@ internal class PolicyEngine {
       when (effect) {
         is PolicyEffect.Deny -> {
           val reason = effect.reason ?: DenyReason(code = p.id.value)
-          return AccessDecision.Deny(reason, decidedByPolicyId = p.id)
+          return AuthorizationDecision.Deny(reason, decidedByPolicyId = p.id)
         }
         PolicyEffect.Allow -> sawAllow = true
         PolicyEffect.NotApplicable -> Unit
       }
     }
 
-    return if (sawAllow) AccessDecision.Allow
-    else AccessDecision.Deny(DEFAULT_DENY)
+    return if (sawAllow) AuthorizationDecision.Allow
+    else AuthorizationDecision.Deny(DEFAULT_DENY)
   }
 }

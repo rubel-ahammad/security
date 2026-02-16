@@ -1,4 +1,4 @@
-package com.ideascale.commons.security.core
+package com.ideascale.commons.security.model
 
 @JvmInline
 value class PolicyId(val value: String) {

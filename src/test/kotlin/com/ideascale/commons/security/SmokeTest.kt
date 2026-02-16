@@ -1,13 +1,13 @@
 package com.ideascale.commons.security
 
-import com.ideascale.commons.security.access.AuthorizerBuilder
-import com.ideascale.commons.security.core.AccessRequest
-import com.ideascale.commons.security.core.Action
-import com.ideascale.commons.security.core.ActionId
-import com.ideascale.commons.security.core.PolicyId
-import com.ideascale.commons.security.core.Principal
-import com.ideascale.commons.security.core.Resource
-import com.ideascale.commons.security.core.ResourceId
+import com.ideascale.commons.security.authorization.AuthorizerBuilder
+import com.ideascale.commons.security.model.AuthorizationRequest
+import com.ideascale.commons.security.model.Action
+import com.ideascale.commons.security.model.ActionId
+import com.ideascale.commons.security.model.PolicyId
+import com.ideascale.commons.security.model.Principal
+import com.ideascale.commons.security.model.Resource
+import com.ideascale.commons.security.model.ResourceId
 import com.ideascale.commons.security.policy.Policy
 import com.ideascale.commons.security.policy.PolicyContext
 import com.ideascale.commons.security.policy.PolicyEffect
@@ -33,7 +33,7 @@ class SmokeTest {
     val authz = AuthorizerBuilder(cfg).build()
 
     val decision = authz.authorize(
-      AccessRequest(
+      AuthorizationRequest(
         principal = Principal(memberId = 1L, workspaceId = 10L),
         resource = Idea,
         action = Read,

@@ -1,7 +1,7 @@
 package com.ideascale.commons.security.policy
 
-import com.ideascale.commons.security.core.DenyReason
-import com.ideascale.commons.security.core.PolicyId
+import com.ideascale.commons.security.model.DenyReason
+import com.ideascale.commons.security.model.PolicyId
 
 interface Policy {
   val id: PolicyId

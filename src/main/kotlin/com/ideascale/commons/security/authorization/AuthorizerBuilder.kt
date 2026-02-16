@@ -1,4 +1,4 @@
-package com.ideascale.commons.security.access
+package com.ideascale.commons.security.authorization
 
 import com.ideascale.commons.security.internal.DefaultAuthorizer
 import com.ideascale.commons.security.internal.DefaultPolicyContextFactory
@@ -13,13 +13,13 @@ class AuthorizerBuilder(
   private val config: PolicyConfig
 ) {
   private var contextFactory: PolicyContextFactory = DefaultPolicyContextFactory()
-  private var decisionHandler: AccessDecisionHandler = ThrowOnDenyDecisionHandler
+  private var decisionHandler: AuthorizationDecisionHandler = ThrowOnDenyDecisionHandler
 
   fun contextFactory(factory: PolicyContextFactory): AuthorizerBuilder = apply {
     this.contextFactory = factory
   }
 
-  fun decisionHandler(handler: AccessDecisionHandler): AuthorizerBuilder = apply {
+  fun decisionHandler(handler: AuthorizationDecisionHandler): AuthorizerBuilder = apply {
     this.decisionHandler = handler
   }
 

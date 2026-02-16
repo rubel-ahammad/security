@@ -1,4 +1,4 @@
-package com.ideascale.commons.security.core
+package com.ideascale.commons.security.model
 
 interface Resource { val id: ResourceId }
 interface Action { val id: ActionId }
@@ -9,7 +9,7 @@ data class Principal(
   val roles: Set<String> = emptySet()
 )
 
-data class AccessRequest(
+data class AuthorizationRequest(
   val principal: Principal?, // null => unauthenticated/anonymous
   val resource: Resource,
   val action: Action,

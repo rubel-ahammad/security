@@ -1,8 +1,8 @@
 package com.ideascale.commons.security.policy
 
-import com.ideascale.commons.security.core.ActionId
-import com.ideascale.commons.security.core.PolicyId
-import com.ideascale.commons.security.core.ResourceId
+import com.ideascale.commons.security.model.ActionId
+import com.ideascale.commons.security.model.PolicyId
+import com.ideascale.commons.security.model.ResourceId
 
 data class PolicyConfig(
   val version: String,
@@ -17,7 +17,7 @@ data class PolicyBinding(
 )
 
 /**
- * Resource selection applies to AccessRequest.resource.id (resource "type").
+ * Resource selection applies to AuthorizationRequest.resource.id (resource "type").
  */
 sealed interface ResourceSelection {
   data object Any : ResourceSelection
@@ -26,7 +26,7 @@ sealed interface ResourceSelection {
 }
 
 /**
- * Action selection applies to AccessRequest.action.id.
+ * Action selection applies to AuthorizationRequest.action.id.
  */
 sealed interface ActionSelection {
   data object Any : ActionSelection

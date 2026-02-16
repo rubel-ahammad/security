@@ -1,7 +1,7 @@
 package com.ideascale.commons.security.policy.dsl
 
-import com.ideascale.commons.security.core.Action
-import com.ideascale.commons.security.core.Resource
+import com.ideascale.commons.security.model.Action
+import com.ideascale.commons.security.model.Resource
 import com.ideascale.commons.security.internal.PolicyConfigBuilder
 import com.ideascale.commons.security.policy.Policy
 import com.ideascale.commons.security.policy.PolicyConfig
