@@ -17,7 +17,6 @@ import com.ideascale.commons.security.policy.dsl.policies
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
-import org.junit.Assert.fail
 import org.junit.Test
 
 private object Idea : Resource { override val id = ResourceId("Idea") }
@@ -137,7 +136,6 @@ class SmokeTest {
 
   private fun asDeny(decision: AuthorizationDecision): AuthorizationDecision.Deny {
     if (decision is AuthorizationDecision.Deny) return decision
-    fail("Expected deny decision, but got: $decision")
-    throw AssertionError("unreachable")
+    throw AssertionError("Expected deny decision, but got: $decision")
   }
 }

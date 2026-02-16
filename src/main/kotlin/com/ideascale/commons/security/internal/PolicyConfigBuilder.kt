@@ -20,8 +20,8 @@ import com.ideascale.commons.security.policy.dsl.ResourceDslScope
  */
 internal class PolicyConfigBuilder : PolicyDslScope {
 
-  private val policiesById = LinkedHashMap<PolicyId, Policy>()
-  private val bindings = ArrayList<PolicyBinding>()
+  private val policiesById = linkedMapOf<PolicyId, Policy>()
+  private val bindings = mutableListOf<PolicyBinding>()
 
   override fun resource(resource: Resource, block: ResourceDslScope.() -> Unit) {
     ResourceScope(this, Selection.Exact(resource.id)).apply(block)
@@ -69,7 +69,7 @@ internal class ActionScope(
   private val actionSelection: Selection<ActionId>
 ) : ActionDslScope {
 
-  private val policyIds = ArrayList<PolicyId>(4)
+  private val policyIds = mutableListOf<PolicyId>()
 
   override operator fun Policy.unaryPlus() {
     root.registerPolicy(this)

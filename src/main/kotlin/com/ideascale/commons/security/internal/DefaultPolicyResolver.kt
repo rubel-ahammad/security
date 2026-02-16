@@ -25,19 +25,21 @@ internal class DefaultPolicyResolver(
     val resourceType: ResourceId = request.resource.id
     val actionId: ActionId = request.action.id
 
-    val out = ArrayList<Policy>(8)
-    val seen = LinkedHashSet<PolicyId>()
+    val resolvedPolicies = mutableListOf<Policy>()
+    val seenPolicyIds = linkedSetOf<PolicyId>()
 
-    for (b in config.bindings) {
-      if (b.resource.matches(resourceType) && b.action.matches(actionId)) {
-        for (pid in b.policyIds) {
-          if (seen.add(pid)) {
-            out += checkNotNull(config.policiesById[pid]) { "Unknown policy id '$pid' at runtime" }
+    for (binding in config.bindings) {
+      if (binding.resource.matches(resourceType) && binding.action.matches(actionId)) {
+        for (policyId in binding.policyIds) {
+          if (seenPolicyIds.add(policyId)) {
+            resolvedPolicies += checkNotNull(config.policiesById[policyId]) {
+              "Unknown policy id '$policyId' at runtime"
+            }
           }
         }
       }
     }
-    return out
+    return resolvedPolicies
   }
 
   private fun <T> Selection<T>.matches(value: T): Boolean =
