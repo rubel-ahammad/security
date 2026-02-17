@@ -1,10 +1,10 @@
 package com.ideascale.commons.security.internal
 
 import com.ideascale.commons.security.authorization.AuthorizationDecision
-import com.ideascale.commons.security.model.DenyReason
 import com.ideascale.commons.security.policy.Policy
 import com.ideascale.commons.security.policy.PolicyContext
 import com.ideascale.commons.security.policy.PolicyEffect
+import com.ideascale.commons.security.model.Reason
 
 /**
  * Hard-coded v1 semantics:
@@ -36,7 +36,7 @@ internal class PolicyEngine {
 
       when (effect) {
         is PolicyEffect.Deny -> {
-          val reason = effect.reason ?: DenyReason(code = p.id.value)
+          val reason = effect.reason ?: Reason(code = p.id.value)
           return AuthorizationDecision.Deny(reason, decidedByPolicyId = p.id)
         }
         PolicyEffect.Allow -> sawAllow = true

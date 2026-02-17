@@ -1,9 +1,9 @@
 package com.ideascale.commons.security.internal
 
+import com.ideascale.commons.security.authorization.AuthorizationRequest
 import com.ideascale.commons.security.authorization.AuthorizationDecision
 import com.ideascale.commons.security.authorization.DenyExceptionFactory
 import com.ideascale.commons.security.authorization.Authorizer
-import com.ideascale.commons.security.model.AuthorizationRequest
 
 internal class DecisionHandlingAuthorizer(
   private val delegate: Authorizer,

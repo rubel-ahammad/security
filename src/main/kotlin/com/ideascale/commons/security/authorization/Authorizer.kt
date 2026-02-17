@@ -1,6 +1,5 @@
 package com.ideascale.commons.security.authorization
 
-import com.ideascale.commons.security.model.AuthorizationRequest
 import com.ideascale.commons.security.model.Action
 import com.ideascale.commons.security.model.Principal
 import com.ideascale.commons.security.model.Resource

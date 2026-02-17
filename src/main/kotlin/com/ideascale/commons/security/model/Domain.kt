@@ -9,10 +9,7 @@ data class Principal(
   val roles: Set<String> = emptySet()
 )
 
-data class AuthorizationRequest(
-  val principal: Principal?, // null => unauthenticated/anonymous
-  val resource: Resource,
-  val action: Action,
-  val resourceId: Long,
-  val environment: Map<String, String> = emptyMap()
+data class Reason(
+  val code: String,
+  val details: Map<String, String> = emptyMap()
 )

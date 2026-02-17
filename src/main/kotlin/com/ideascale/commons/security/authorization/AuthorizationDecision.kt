@@ -1,7 +1,7 @@
 package com.ideascale.commons.security.authorization
 
-import com.ideascale.commons.security.model.DenyReason
 import com.ideascale.commons.security.model.PolicyId
+import com.ideascale.commons.security.model.Reason
 
 sealed interface AuthorizationDecision {
   val decidedByPolicyId: PolicyId?
@@ -13,7 +13,7 @@ sealed interface AuthorizationDecision {
   }
 
   data class Deny(
-    val reason: DenyReason,
+    val reason: Reason,
     override val decidedByPolicyId: PolicyId? = null
   ) : AuthorizationDecision {
     override val granted: Boolean = false

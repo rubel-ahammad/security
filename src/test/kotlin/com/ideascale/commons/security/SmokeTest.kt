@@ -4,12 +4,12 @@ import com.ideascale.commons.security.authorization.AuthorizationDecision
 import com.ideascale.commons.security.authorization.AccessDeniedException
 import com.ideascale.commons.security.authorization.DenyExceptionFactory
 import com.ideascale.commons.security.authorization.AuthorizerBuilder
-import com.ideascale.commons.security.model.AuthorizationRequest
+import com.ideascale.commons.security.authorization.AuthorizationRequest
 import com.ideascale.commons.security.model.Action
 import com.ideascale.commons.security.model.ActionId
-import com.ideascale.commons.security.model.DenyReason
 import com.ideascale.commons.security.model.PolicyId
 import com.ideascale.commons.security.model.Principal
+import com.ideascale.commons.security.model.Reason
 import com.ideascale.commons.security.model.Resource
 import com.ideascale.commons.security.model.ResourceId
 import com.ideascale.commons.security.policy.Policy
@@ -27,7 +27,7 @@ private object Read : Action { override val id = ActionId("Read") }
 private object IsAuthenticated : Policy {
   override val id: PolicyId = PolicyId("auth.isAuthenticated")
   override fun evaluate(ctx: PolicyContext): PolicyEffect =
-    if (ctx.request.principal != null) PolicyEffect.Allow else PolicyEffect.NotApplicable
+    if (ctx.principal != null) PolicyEffect.Allow else PolicyEffect.NotApplicable
 }
 
 private object AlwaysAllow : Policy {
@@ -37,7 +37,7 @@ private object AlwaysAllow : Policy {
 
 private object AlwaysDeny : Policy {
   override val id: PolicyId = PolicyId("policy.deny")
-  override fun evaluate(ctx: PolicyContext): PolicyEffect = PolicyEffect.Deny(DenyReason("blocked"))
+  override fun evaluate(ctx: PolicyContext): PolicyEffect = PolicyEffect.Deny(Reason("blocked"))
 }
 
 private object Throws : Policy {
